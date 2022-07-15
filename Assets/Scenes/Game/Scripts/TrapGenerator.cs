@@ -7,9 +7,11 @@ using Random = UnityEngine.Random;
 
 public class TrapGenerator : MonoBehaviour
 {
-    public float coolDown;
     public event Action OnGameFinish;
+    
+    private float coolDown;
     private float targetCoolDown;
+    
     [SerializeField] private List<GameObject> Traps;
     [SerializeField] private List<Transform> points;
     [SerializeField] private Transform TrapArea;
@@ -29,7 +31,7 @@ public class TrapGenerator : MonoBehaviour
         StartCoroutine(GenerateTraps());
     }
 
-    IEnumerator GenerateTraps()
+    private IEnumerator GenerateTraps()
     {
         if (coolDown <= 0)
         {
@@ -41,7 +43,10 @@ public class TrapGenerator : MonoBehaviour
         int randomTrapIndex = Random.Range(0, Traps.Count);
         int randomPointIndex = Random.Range(0, points.Count);
         Vector2 randomPosition = new Vector2(points[randomPointIndex].position.x, transform.position.y);
+        
         GameObject trap = Instantiate(Traps[randomTrapIndex], randomPosition,Quaternion.identity,TrapArea);
+        if (randomPointIndex == 1) trap.transform.localScale = trap.transform.localScale;
+        if (randomPointIndex == 0) trap.transform.localScale = -trap.transform.localScale;
         coolDown -= Time.fixedDeltaTime;
         StartCoroutine(GenerateTraps());
     }

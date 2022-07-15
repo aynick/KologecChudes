@@ -18,15 +18,17 @@ public class RocketLauncher : MonoBehaviour
         StartCoroutine(Launch());
     }
 
-    IEnumerator Launch()
+    private IEnumerator Launch()
     {
-        var randomCoolDown = Random.Range(1, _maxCoolDown);
-        yield return new WaitForSeconds(randomCoolDown);
-        ShowDanger(true);
-        yield return new WaitForSeconds(2);
-        Instantiate(RocketPrefab, transform.position, quaternion.identity, _trapArea);
-        ShowDanger(false);
-        StartCoroutine(Launch());
+        while (true)
+        {
+            var randomCoolDown = Random.Range(1, _maxCoolDown);
+            yield return new WaitForSeconds(randomCoolDown);
+            ShowDanger(true);
+            yield return new WaitForSeconds(2);
+            Instantiate(RocketPrefab, transform.position, quaternion.identity, _trapArea);
+            ShowDanger(false);
+        }
     }
 
     void ShowDanger(bool show)

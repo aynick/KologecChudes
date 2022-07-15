@@ -13,7 +13,7 @@ public class ScoreRecorder : MonoBehaviour
         StartCoroutine(ScoreRecord());
     }
 
-    IEnumerator ScoreRecord()
+    private IEnumerator ScoreRecord()
     {
         while (true)
         {
